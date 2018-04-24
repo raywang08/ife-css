@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .msg {
+            color: #000;
+            transition: all 0.2s;
+
+        }
+
+        .msg.current {
+            color: rgb(63, 63, 214);
+        }
+
+        .rect {
+            margin: -10px auto 30px;
+            width: 0;
+            height: 3px;
+            background-color: rgb(63, 63, 214);
+            transition: all 0.2s;
+        }
+
+        .rect.current {
+            width: 120px;
+        }
+
+        .btn {
+            margin: 0 auto;
+            padding: 3px 0;
+            width: 100px;
+            font: 16px/20px "microsoft yahei";
+            border-radius: 10px;
+            outline: none;
+            border: solid 1px #333;
+            background-color: #fff;
+        }
+
+        .btn.current {
+            background: rgba(63, 63, 214, 0.3);
+        }
+
+        .btn:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 class="msg">前端学院</h2>
+    <div class="rect"></div>
+    <button class="btn">切换样式</button>
+</body>
+
+</html>
+<script>
+    var btn = document.querySelector('.btn');
+    var msg = document.querySelector('.msg');
+    var rect = document.querySelector('.rect');
+
+    btn.onmousedown = function () {
+        btn.classList.add("current");
+    }
+    btn.onmouseup = function () {
+        btn.classList.remove("current");
+    }
+    btn.onclick = function () {
+        rect.classList.toggle("current");
+        msg.classList.toggle("current");
+    }
+</script>
