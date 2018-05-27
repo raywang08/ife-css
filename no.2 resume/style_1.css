@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  line-height: 0;
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+}
+.style_1 {
+  margin: 50px auto;
+  max-width: 60%;
+  min-width: 600px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #444;
+}
+.style_1 h1 {
+  font-size: 30px;
+  margin: 0.5em 0 1em 0;
+}
+.style_1 section h2 {
+  margin: 1em 0;
+}
+.style_1 section div {
+  font-family: 'microsoft yahei';
+  margin-right: 20px;
+}
+.style_1 .base-intro div {
+  float: left;
+}
+.style_1 .base-intro div h4 {
+  margin-right: 5px;
+  display: inline-block;
+}
+.style_1 section:nth-of-type(n+3) div {
+  margin: 1em 0;
+}
