@@ -1,0 +1,148 @@
+.w {
+  width: 960px;
+  margin: 0 auto;
+}
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
+ul li {
+  list-style: none;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+header {
+  width: 100%;
+  height: 96px;
+  background-color: #333;
+}
+.head-wapper {
+  position: relative;
+}
+.logo {
+  font: 26px/96px "Arail";
+  color: #fff;
+}
+.link {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.link a {
+  margin-right: 10px;
+  color: #fff;
+  font: 12px/35px Arail;
+}
+.banner {
+  width: 100%;
+  height: 300px;
+  background: #66BB33;
+}
+.banner .w {
+  height: 100%;
+  position: relative;
+}
+.banner .w ul {
+  position: absolute;
+  width: 142px;
+  height: 36px;
+  right: 0;
+  bottom: 10px;
+}
+.banner .w ul li {
+  margin-left: 5px;
+  float: left;
+  width: 28px;
+  height: 34px;
+  cursor: pointer;
+  border: solid 1px #335E1A;  
+  text-align: center;
+  font: 12px/34px Arial;
+  color: #66914D;
+  background-color: #B2DD99;
+}
+.banner ul li:hover {
+  padding-top: 15px;
+  margin-top: -15px;
+  color: #3A4B30;
+  background-color: #E0F1D6;
+}
+nav {
+  width: 100%;
+  height: 70px;
+  border-bottom: solid 1px #ddd;
+}
+nav .w {
+  position: relative;
+  height: 100%;
+}
+nav .w ul {
+  position: absolute;
+  height: 51px;
+  left: 0;
+  bottom: 0;
+}
+nav .w ul li {
+  cursor: pointer;
+  float: left;
+  height: 49px;
+  padding: 0 30px;
+  border-radius: 18px 18px 0 0;
+  border: solid 1px #ddd;
+  border-bottom-color: rgba(0, 0, 0, 0);
+  font: 12px/51px Arail;
+  text-align: center;
+  background-color: #eee;
+}
+nav .w ul li:hover {
+  height: 51px;
+  border-bottom-color: rgba(0, 0, 0, 0);
+  color: #000;
+  background-color: #fff;
+}
+main {
+  margin-top: 10px;
+  height: 548px;
+}
+main .w {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;  
+}
+main .w ul:nth-child(n+2) {
+  margin-top: 10px;
+}
+main .w ul {
+  flex: 1;
+  width: 100%;
+  /* background-color: #eee; */
+  justify-content: space-between;
+  display: flex;
+}
+main .w ul li {
+  /* background-color: red; */
+  padding: 80px;
+  border: solid 1px #ddd;
+  flex: 1;
+  text-align: center;
+  line-height: 100%;
+}
+main .w ul li:nth-child(n+2) {
+  margin-left: 10px;
+}
+footer {
+  box-sizing: border-box;
+  padding-top: 20px;
+  margin-top: 10px;
+  height: 120px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  background-color: #666;
+}
