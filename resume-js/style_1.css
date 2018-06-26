@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  line-height: 0;
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+}
+.style_1 {
+  position: relative;
+  margin: 50px auto;
+  max-width: 60%;
+  min-width: 600px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #444;
+}
+.style_1 h1 {
+  font-size: 30px;
+  margin: 0.5em 0 1em 0;
+}
+.style_1 #word,
+.style_1 #hobbit,
+.style_1 #hide {
+  float: right;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  outline-style: none;
+  color: #fff;
+  letter-spacing: .1em;
+  background-color: #09f;
+}
+.style_1 #word:active,
+.style_1 #hobbit:active,
+.style_1 #hide:active {
+  background-color: #0bf;
+}
+.style_1 .wrod-content,
+.style_1 .hobbit-content {
+  position: absolute;
+  margin: 10px;
+  padding: 5px;
+  top: 200px;
+  right: 0;
+  transition: all .3s;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  border-radius: 5px;
+  border: solid 1px #09f;
+  background-color: #fff;
+}
+.style_1 section h2 {
+  margin: 1em 0;
+}
+.style_1 section div {
+  font-family: 'microsoft yahei';
+  margin-right: 20px;
+}
+.style_1 .base-intro div {
+  float: left;
+}
+.style_1 .base-intro div h4 {
+  margin-right: 5px;
+  display: inline-block;
+}
+.style_1 section:nth-of-type(n+3) div {
+  margin: 1em 0;
+}
