@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">    
+  <title>IFE ECMAScript</title>
+</head>
+<body>        
+  <input id="dec-number" type="number" placeholder="输入一个十进制非负整数">
+  <input id="bin-bit" type="number" placeholder="输入转化后二进制数字位数">
+  <button id="trans-btn">转化为二进制</button>
+  <p id="result">运算结果</p>
+
+<script>
+var inp = document.querySelector('#dec-number');
+document.querySelector('#trans-btn').addEventListener('click', fn);
+var show = document.querySelector('#result');
+var bitBit = document.querySelector('#bin-bit');
+
+function dec2bin(decNumber) {
+  // 在这里实现你的转化方法，注意需要判断输入必须为一个非负整数
+  if (decNumber < 0) {
+    alert('非负整数');
+    return
+  } else {
+    if (!bitBit.value) {
+      alert('请输入字位数');
+      return;
+    }
+    console.log('正在往下面执行');
+    let tempInt = Math.floor(decNumber);
+    let decimal = decNumber - Math.floor(decNumber);
+    let str = '';
+    while(tempInt / 2 > 1) {
+      str += tempInt % 2;
+      tempInt = (tempInt - tempInt % 2) / 2;
+    }
+    if (tempInt === 1) {
+      str = str + '1';
+    } else {
+      str = str + '0' + '1';
+    }
+    // 将字符串转换成数组
+    let arr = str.split('');
+
+    if(str.length <= (+bitBit.value)) {
+      let addLength = +bitBit.value - str.length;
+      while(addLength > 0) {
+        arr.push(0);
+        addLength--;
+      }
+    } else {
+      console.error('输入的位数台少');
+    }
+
+    // 将数组翻转
+    arr.reverse();
+    // 将数组转换成字符串
+    str = arr.join('');
+    show.innerHTML = str;
+  }
+}
+
+// 实现党点击转化按钮时，将输入的十进制数字转化为二进制，并显示在result的p标签内
+// Some coding
+function fn () {
+  dec2bin(+inp.value)
+}
+</script>
+</body>
+</html>
