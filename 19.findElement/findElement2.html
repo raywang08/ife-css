@@ -45,10 +45,10 @@
         // 返回某个section下所有span中内容为HTML的span标签
         var spanArr = document.querySelectorAll('#' + sectionId + ' ' + 'span');
         var spanTemp = [];
-        Array.prototype.forEach.call(spanArr, function (ele) {
+        spanArr.forEach(function () {
           if (ele.innerText === 'HTML') {
             spanTemp.push(ele);
-          }
+          }          
         })
         return spanTemp;
     }
@@ -57,7 +57,7 @@
         // 返回某个section下，所有所包含span内容为spanCont的LI标签
       var spanArr = document.querySelectorAll('#' + sectionId + ' ' + 'li' + ' ' + 'span');
       var spanArrTemp = [];
-      Array.prototype.forEach.call(spanArr, function (ele) {
+      spanArr.forEach(function (ele) {
         if (ele.innerText === spanCont) {
           spanArrTemp.push(ele.parentNode);
         }
@@ -67,7 +67,7 @@
 
     function getActiveLinkContent(sectionId) {
         // 返回某个section下，class为active的链接中包含的文字内容
-      var linkText = document.querySelector('#' + sectionId + ' ' + '.active').href;
+      var linkText = document.querySelector('#' + sectionId + ' ' + '.active').childNodes[0].nodeValue;
       return linkText;
     }
     

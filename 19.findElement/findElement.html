@@ -51,7 +51,7 @@
         var spanArrTemp = [];
         
         Array.prototype.forEach.call(spanArr, function(ele) {
-          if (ele.innerText === 'HTML') {
+          if (ele.childNodes[0].nodeValue === 'HTML') {
             spanArrTemp.push(ele);
           }
         })
@@ -67,7 +67,7 @@
         var spanList = section.getElementsByTagName('span');
         var liArr = [];
         Array.prototype.forEach.call(spanList, function (ele) {
-          if(ele.parentNode.nodeName.toLowerCase() === 'li' && ele.innerText === spanCont) {
+          if(ele.parentNode.nodeName.toLowerCase() === 'li' && ele.childNodes[0].nodeValue === spanCont) {
             liArr.push(ele.parentNode);
           }
         })
@@ -77,8 +77,14 @@
     function getActiveLinkContent(sectionId) {
         // 返回某个section下，class为active的链接中包含的文字内容
         var section = document.getElementById(sectionId);
-        var activeItem = section.getElementsByClassName('active')[0];
-        var linkText = activeItem.href;
+        var childArr = section.getElementsByTagName('a');
+        var childArrTemp = Array.from(childArr);
+        var activeArr = childArrTemp.filter(function (ele) {
+          if (ele.getAttribute('class') === 'active') {
+            return true;
+          }
+        })
+        var linkText = activeArr[0].childNodes[0].nodeValue;
         return linkText;
     }
     
