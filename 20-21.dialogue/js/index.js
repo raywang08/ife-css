@@ -83,16 +83,15 @@ photo.style.background = "url(./image/boy.jpg)";
 
 var photoTimer = setInterval(function() {
   if (photoFlag === 0) {
-    photo.style.background = "url('./image/boy.jpg') no-repeat 0 " + "-" + photoNum * 480 + 'px';
     photoNum++;
     if (photoNum === 16) {
       photoFlag = 1;
     }
   } else  {
-    photo.style.background = "url(./image/boy.jpg) no-repeat 0 " + "-" +photoNum * 480 + 'px';
     photoNum--;
     if (photoNum === 0) {
       photoFlag = 0;
     }
   }
+  photo.style.backgroundPositionY = "-" + photoNum * 480 + 'px';
 }, 100)
