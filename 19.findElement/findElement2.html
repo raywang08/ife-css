@@ -45,7 +45,7 @@
         // 返回某个section下所有span中内容为HTML的span标签
         var spanArr = document.querySelectorAll('#' + sectionId + ' ' + 'span');
         var spanTemp = [];
-        spanArr.forEach(function () {
+        spanArr.forEach(function (ele) {
           if (ele.innerText === 'HTML') {
             spanTemp.push(ele);
           }          
