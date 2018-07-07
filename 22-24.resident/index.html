@@ -44,11 +44,11 @@
         <label>String A:
             <input class="radio-a" type="radio" checked="true" name="str-obj" value="a">
         </label>
-        <textarea class="str-a"></textarea>
+        <textarea class="str-a" rows="1"></textarea>
         <label>String B:
             <input class="radio-b" type="radio" name="str-obj" value="b">
         </label>
-        <textarea class="str-b"></textarea>        
+        <textarea class="str-b" rows="1"></textarea>        
         <label>Num A：<input class="num-a" type="number" value="0"></label>
         <label>Num B：<input class="num-b" type="number" value="1"></label>
     </div>
@@ -59,7 +59,8 @@
         <button>输入B中的内容，在输入A的内容中第一次出现的位置（indexOf）</button>
         <button>输入A中的内容，在输入B的内容中最后一次出现的位置（lastIndexOf）</button>
         <button>使用slice获取选中输入框内容的部分内容，参数为num-a及num-b</button>
-        <button>当前选中输入框的行数</button>
+        <button style="display: inline-block">当前选中输入框的行数</button>
+        <span style="font-size: 12px; color: #000; opacity: .5;">这个方法必须将textarea的rows设置为1，否则无法成功</span>
         <button>使用substr获取选中输入框内容的子字符串，参数为num-a及num-b</button>
         <button>把所选输入框中的内容全部转为大写</button>
         <button>把所选输入框中的内容全部转为小写</button>
@@ -309,10 +310,15 @@
 
   // 当前选中输入框的行数
   secondBtns[6].onclick = function () {
-    // var checkedNode = secondGetCheck();
-    // console.log(checkedNode.childNodes)
-    // var node = checkedNode.value.indexOf('\r\n');
-    // console.log(node);
+    // 注：这个方法必须将行高设置为1
+    var checkedNode = secondGetCheck();
+    var fontHeight = parseInt(getComputedStyle(checkedNode,undefined).fontSize);
+    var contHeight = checkedNode.scrollHeight;
+    var boxHeight = checkedNode.clientHeight;
+    var rows = 0;
+    
+    rows = Math.floor(contHeight / fontHeight);
+    secondResult.innerText = rows;
   }
 
   // 使用substr获取选中输入框内容的子字符串，参数为num-a及num-b
