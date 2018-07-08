@@ -126,9 +126,11 @@
 
     var totalTime = Math.abs(timeSet.getTime() - timeNow.getTime());
     if (timeSet.getTime() - timeNow.getTime() > 0) {
-      resultWrapper.innerHTML = "现在距离: " + yearSet + '年' + monthSet + '月' +  dateSet + '日' + '星期' + weekSet + ' 还有: ' + msToTime(totalTime);
+      resultWrapper.innerHTML = "现在距离: " + yearSet + '年' + checkTime(monthSet) + '月' + checkTime(dateSet) + '日' + '星期' + weekSet
+       + ' ' + checkTime(hourSet) + ':' + checkTime(minuteSet) + ':' +  checkTime(secondSet) + ' 还有: ' + msToTime(totalTime);
     } else {
-      resultWrapper.innerHTML = "现在距离: " + yearSet + '年' + monthSet + '月' +  dateSet + '日' + '星期' + weekSet + ' 已经过去: ' + msToTime(totalTime);
+      resultWrapper.innerHTML = "现在距离: " + yearSet + '年' + checkTime(monthSet) + '月' +  checkTime(dateSet) + '日' + '星期' + weekSet
+      + ' ' + checkTime(hourSet) + ':' + checkTime(minuteSet) + ':' + checkTime(secondSet) + ' 已经过去: ' + msToTime(totalTime);
     }
     setTimeout(() => {
       showUpdate();
@@ -152,7 +154,7 @@
   /**
    * 补零操作函数
    */
-  function checkTime (time, num) {
+  function checkTime (time, num = 2) {
     var time = '000000' + time;
     return time.slice(-num);
   }
