@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      margin: 20px;
+    }
+    .wrapper {
+      width: 300px;
+    }
+    ul, li {
+      color: #999;      
+      list-style: none;
+    }
+    li:hover {
+      cursor: pointer;
+      background-color: #0ef;
+    }
+    li.current {
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <input id="email-input" type="text">
+    <ul id="email-sug-wrapper" class="email-sug"></ul>
+  </div>
+</body>
+</html>
+
+<script>
+  var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+  var emailInput = document.querySelector('#email-input');
+  var emailSug = document.querySelector('.email-sug');
+  var liArr = document.querySelectorAll('#email-sug-wrapper li');
+  var flag = 0;
+  var currentIndex = 0;
+
+  emailInput.focus();
+
+  emailInput.oninput = function (event) {
+    console.log('oninput');
+    event = event || window.event;
+    
+    console.log(event);
+
+    // 获取输入框里面处理后的内容
+    var value = getInputValue(emailInput.value);
+    // 设置li标签的内容数组
+    var arrTemp = setListValue(value);
+    // 将数组遍历到ul里面
+    setLiArr(arrTemp);
+    // 控制ul的显影
+    displayList();
+  }
+  
+  /*
+  * 去除value前后的空格
+  */
+  function getInputValue (value) {
+    // 对value进行转码
+    // var div = document.createElement('div');
+    // div.innerHTML = value;
+    // value = div.innerText || div.textContent;
+    // div = null;
+    return value.trim();
+  }
+
+  /*
+  * 将postfixList的数组遍历后，分别在前面加上@value后然后输出
+  */
+  function setListValue (value) {
+    var arrTemp = []
+    var index = value.indexOf('@');
+    var postValue = '';
+    var preValue = '';
+    if (index > -1) {
+      preValue = value.slice(0, index);
+      postValue = value.slice(index + 1);
+    } else {
+      preValue = value;
+    }
+    var listTemp = [];
+    postfixList.forEach((ele) => {
+      if (ele.indexOf(postValue) > -1) {
+        listTemp.push(ele);
+      }
+    })
+    if (listTemp.length === 0) {
+      listTemp = postfixList.slice();
+    }
+    listTemp.forEach(ele => {
+      arrTemp.push(preValue + '@' + ele);
+    })
+    return arrTemp;
+  }
+
+  /*
+  * 生成li标签，遍历将arr里面的内容放到li便签里面，然后将li标签放到ul里面
+  */
+  function setLiArr (arr) {
+    emailSug.innerHTML = '';
+    arr.forEach(ele => {
+      var li = document.createElement('li');
+      li.innerText = ele;
+      emailSug.appendChild(li);
+    })
+  }
+
+  /**
+   * 利用事件委托获取被点击li标签的内容时
+   */
+  emailSug.onclick = function (event) {
+    event = event || window.envent;
+    emailInput.value = event.target.innerText;
+    hide();
+  }
+
+  /*
+  * 通过判断输入的内容，控制ul的显隐
+  */
+  function displayList () {
+    if (emailInput.value.trim().length > 0) {
+      show();
+    } else {
+      hide();
+    }
+  }
+  
+  function resetLiStyle () {
+    var currentLi = document.querySelector('.current');
+    console.log(currentLi);
+    currentLi.classList.remove('current');
+  }
+
+  function show () {
+    // 每次检测到有输入都让currentIndex的值为0
+    currentIndex = 0;
+    flag = 1;    
+    emailSug.style.display = "block";
+    
+    // 设置第一个li为默认选中
+    var li = emailSug.querySelector('li');
+    li.classList.add('current');
+  }
+
+  function hide () {
+    // 每当隐藏的时候，将currentIndex的值设置为0
+    currentIndex = 0;
+    flag = 0;
+    emailSug.style.display = "none";
+    resetLiStyle();
+    emailInput.focus();
+  }
+  
+  document.onkeyup = function (event) {
+    console.log(event);
+    event = event || window.event;
+    switch (event.keyCode) {
+      case 38:
+        if (flag === 1) {
+          upFn();          
+        }
+        break;
+      case 40:
+        if (flag === 1) {
+          downFn();
+        }
+        break;
+      case 13:
+        if (flag === 1) {
+          enterFn();
+        }
+        break;
+      case 27:
+        if (flag === 1) {
+          console.log('esc被按了')
+          emailInput.select();
+          hide();
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  /**
+   * 向上
+   */
+  function upFn () {
+    // 首先重置默认选中样式
+    resetLiStyle();
+    // 这儿必须要重新获取一次，因为li的个数是动态的
+    var arrTemp = document.querySelectorAll('li');
+    currentIndex--;
+    if(currentIndex < 0) {
+      currentIndex = arrTemp.length - 1;
+    }
+    arrTemp[currentIndex].classList.add('current');    
+  }
+  /**
+   * 向下
+   */
+  function downFn () {
+      // 首先重置默认选中样式
+      resetLiStyle();
+      // 这儿必须要重新获取一次，因为li的个数是动态的
+      var arrTemp = document.querySelectorAll('li');
+      currentIndex++;
+      if(currentIndex > arrTemp.length - 1) {
+        currentIndex = 0;
+      }
+      arrTemp[currentIndex].classList.add('current');   
+  }
+  /**
+   * 空格
+   */
+  function enterFn () {
+    var arrTemp = document.querySelectorAll('li');
+    console.log(arrTemp[currentIndex]);
+    emailInput.value = arrTemp[currentIndex].innerText;
+    hide();
+  }
+
+</script>
