@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <select id="year-select">
+    </select>
+    
+    <select id="month-select">
+    </select>
+    
+    <select id="day-select">
+    </select>
+    
+    <select id="hour-select">
+    </select>
+    
+    <select id="minite-select">
+    </select>
+    
+    <select id="second-select">
+    </select>
+    
+    <p id="result-wrapper">现在距离 2001年1月1日星期X HH:MM:SS 还有 X 天 X 小时 X 分 X 秒</p>
+</body>
+</html>
+
+<script>
+  var yearSelect = document.querySelector('#year-select');
+  var monthSelect = document.querySelector('#month-select');
+  var daySelect = document.querySelector('#day-select');
+  var hourSelect = document.querySelector('#hour-select');
+  var minuteSelect = document.querySelector('#minite-select');
+  var secondSelect = document.querySelector('#second-select');
+  var resultWrapper = document.querySelector('#result-wrapper');
+  var yearSet = 0;
+  var monthSet = 0;
+  var dateSet = 0;
+  var hourSet = 0;
+  var minuteSet = 0;
+  var secondSet = 0;
+  // var weekSet = '';
+
+  /* 这一段为动态渲染 */
+  for (var i = 2000; i <= 2032; i++) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.innerText = i;
+    yearSelect.appendChild(option);
+  }
+
+  for (var i = 1; i <= 12; i++) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.innerText = i;
+    monthSelect.appendChild(option);
+  }
+
+  for (var i = 0; i <= 23; i++) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.innerText = i;
+    hourSelect.appendChild(option);
+  }
+
+  for (var i = 0; i <= 59; i++) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.innerText = i;
+    minuteSelect.appendChild(option);
+  }
+
+  for (var i = 0; i <= 59; i++) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.innerText = i;
+    secondSelect.appendChild(option);
+  }
+
+
+  /**
+   * 根据选择的月份显示不同的天数
+   */
+  function setDay () {
+    var dayArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    console.log(monthSet); 
+    if(isRun(yearSet)) {
+      dayArr[1] = 29;
+    }
+    // 首先清空
+    daySelect.innerHTML = '';
+    for (var i = 1; i <= dayArr[+monthSet-1]; i++) {
+      var option = document.createElement('option');
+      option.value = i;
+      option.innerText = i;
+      daySelect.appendChild(option);
+    }
+    dateSet = daySelect.value;
+  }
+
+  /**
+   * 判断是否是闰年函数
+   */
+  function isRun (year) {
+    if ((year % 400 === 0) || ((year % 4 === 0) && (year % 100 !== 0))) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * 显示更新函数
+   */
+  function showUpdate () {
+    var timeNow = new Date();
+    // var str = 2016/01/27 12:00:00
+    var str = yearSet + '/' + monthSet + '/' + dateSet + ' ' + hourSet + ':' + minuteSet + ':' + secondSet;
+    var timeSet = new Date(str);
+
+    var weekSet = checkWeek(timeSet.getDay());
+    
+
+    var totalTime = Math.abs(timeSet.getTime() - timeNow.getTime());
+    if (timeSet.getTime() - timeNow.getTime() > 0) {
+      resultWrapper.innerHTML = "现在距离: " + yearSet + '年' + monthSet + '月' +  dateSet + '日' + '星期' + weekSet + ' 还有: ' + msToTime(totalTime);
+    } else {
+      resultWrapper.innerHTML = "现在距离: " + yearSet + '年' + monthSet + '月' +  dateSet + '日' + '星期' + weekSet + ' 已经过去: ' + msToTime(totalTime);
+    }
+    setTimeout(() => {
+      showUpdate();
+    }, 1000);
+  }
+
+  /**
+   * 将ms转换成需要的字符串
+   */
+  function msToTime (time) {
+    var day = Math.floor(time / 1000 / 60 / 60 / 24);
+    day = checkTime(day, 3);
+    var hour = Math.floor(time / 1000 / 60 / 60 % 24);
+    hour = checkTime(hour, 2);
+    var minute = Math.floor(time / 1000 / 60 % 60);
+    minute = checkTime(minute, 2);
+    var second = Math.floor(time / 1000 % 60);
+    second = checkTime(second, 2);
+    return day + '天' + hour + '小时' + minute + '分' + second + '秒';
+  }
+
+  /**
+   * 补零操作函数
+   */
+  function checkTime (time, num) {
+    var time = '000000' + time;
+    return time.slice(-num);
+  }
+  
+  /**
+   * 对星期进行处理函数
+   */
+  function checkWeek (week) {
+    var arr = ['日', '一', '二', '三', '四', '五', '六'];
+    return arr[+week];
+  }
+   
+  /* 默认执行 */
+  yearSet = yearSelect.value;
+  monthSet = monthSelect.value;
+  hourSet = hourSelect.value;
+  minuteSet = minuteSelect.value;
+  secondSet = secondSelect.value;
+  setDay();
+  showUpdate();
+
+  /* 以下为选择后触发的事件 */
+  yearSelect.onchange = function () {
+    yearSet = yearSelect.value;
+    setDay();
+    // showUpdate();
+  }
+  
+  monthSelect.onchange = function () {
+    monthSet = monthSelect.value;
+    setDay();
+    // showUpdate();
+  }
+
+  daySelect.onchange = function () {
+    dateSet = daySelect.value;
+    // showUpdate();
+  }
+
+  hourSelect.onchange = function () {
+    hourSet = hourSelect.value;
+    // showUpdate();
+  }
+
+  minuteSelect.onchange = function () {
+    minuteSet = minuteSelect.value;    
+    // showUpdate();
+  }
+
+  secondSelect.onchange = function () {
+    secondSet = secondSelect.value;    
+    // showUpdate();
+  }
+
+
+</script>
