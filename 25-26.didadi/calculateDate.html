@@ -140,7 +140,6 @@
    */
   function msToTime (time) {
     var day = Math.floor(time / 1000 / 60 / 60 / 24);
-    day = checkTime(day, 3);
     var hour = Math.floor(time / 1000 / 60 / 60 % 24);
     hour = checkTime(hour, 2);
     var minute = Math.floor(time / 1000 / 60 % 60);
