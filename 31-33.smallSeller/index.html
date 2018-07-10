@@ -8,18 +8,18 @@
   <link rel="stylesheet" href="./base.css">
 </head>
 <body>
-  <div class="region_select">
-    <label><input type="checkbox" value="华东" class="region_east" checked disabled>华东</label>
-    <label><input type="checkbox" value="华南" class="region_south">华南</label>
-    <label><input type="checkbox" value="华北" class="region_north">华北 </label>
-    <label><input type="checkbox" value="全选" class="region_all">全选</label>
-  </div>
-
   <div class="goods_select">
     <label><input type="checkbox" value="手机" class="goods_phone" checked disabled>手机</label>
     <label><input type="checkbox" value="笔记本" class="goods_book">笔记本</label>
     <label><input type="checkbox" value="智能音箱" class="goods_box">智能音箱</label>
     <label><input type="checkbox" value="全选" class="goods_all">全选</label>
+  </div>
+
+  <div class="region_select">
+    <label><input type="checkbox" value="华东" class="region_east" checked disabled>华东</label>
+    <label><input type="checkbox" value="华南" class="region_south">华南</label>
+    <label><input type="checkbox" value="华北" class="region_north">华北 </label>
+    <label><input type="checkbox" value="全选" class="region_all">全选</label>
   </div>
   <div class="table"></div>
 </body>
@@ -124,24 +124,19 @@
     var regionArr = regionSelect.querySelectorAll('input:checked');
     var goodsArr = goodsSelect.querySelectorAll('input:checked');
     var arrTemp = [];
-    regionArr.forEach(ele => {
-      for (var key in objData) {
-        if (ele.value === key) {
-          arrTemp.push(objData[key]);
+    goodsArr.forEach(ele => {
+      sourceData.forEach(item => {
+        if (item.product === ele.value) {
+          arrTemp.push(item);
         }
-      }
+      })
     })
     var arrTemp1 = [];
     arrTemp.forEach((item, index) => {
-      item.forEach((ele, index1) => {
-        goodsArr.forEach(e => {
-          if (ele.product === e.value) {
-            if (!arrTemp1[index]) {
-              arrTemp1[index] = [];
-            }
-            arrTemp1[index].push(arrTemp[index][index1]);
-          }
-        })
+      regionArr.forEach(ele => {
+        if (item.region === ele.value) {
+          arrTemp1.push(item);
+        }
       })
     })
     return arrTemp1;
@@ -156,19 +151,17 @@
 
     var str1 = '';
     valueArr.forEach(ele => {
-      ele.forEach(item => {
-        str1 += '<tr>'
-        for (var key in item) {
-          if (key === 'sale') {
-            item[key].forEach(e => {
-              str1 += '<td>' + e + '</td>'
-            })
-            return;
-          }
-          str1 += '<td>' + item[key] + '</td>'
+      str1 += '<tr>'
+      for (var key in ele) {
+        if (key === 'sale') {
+          ele[key].forEach(item => {
+            str1 += '<td>' + item + '</td>'
+          })
+          return;
         }
-        str1 += '<tr>' 
-      })
+        str1+= '<td>' + ele[key] + '</td>'
+      }
+      str1 += '</tr>'
     })
     return '<table>' + str + str1 + '</table>'
   }
@@ -178,11 +171,42 @@
     table.innerHTML = value;
   }
 
+  // 将相同商品的名称何为一行
+  function merge () {
+    var regionArr = regionSelect.querySelectorAll('input:checked');
+    var regionAll = regionSelect.querySelectorAll('input');
+
+    var length = regionArr.length;
+    // 如果选中的个数等于了所有的个数，说明'全选也被选中了',此时的length应该减去'全选'
+    if (length === regionAll.length) {
+      console.log('这儿相等了');
+      length--;
+    }
+    var chooseTdArr = document.querySelectorAll('tr');
+    chooseTdArr.forEach((ele, index) => {
+      console.log('这儿是ele');
+      console.log(ele);
+      var firstTd = ele.querySelector('td');
+      console.log('这儿是firstTd');
+      console.log(firstTd);
+      if (index % length === 1 && length > 1) {
+        console.log('这里面进行设置');
+        firstTd.setAttribute('rowspan', length);
+        // continue;
+        return;
+      }
+      if (index > 1 && length > 1) {
+        ele.removeChild(firstTd);
+      }
+    })
+  }
+
   // 将显示封装成一个新的函数
   function update () {
     var filterArr = filterList();
     var innerContent = renderValue(filterArr);
     beginRender(innerContent);
+    merge();
   }
 
   objData = classify(sourceData);

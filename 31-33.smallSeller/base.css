@@ -11,7 +11,7 @@ table {
 table th {
   width: 50px;
 }
-table tr td:first-child {
+table tbody tr th:first-child {
   width: 150px;
   /* background-color: red; */
 }
