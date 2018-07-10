@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./base.css">
+</head>
+<body>
+  <select id="region_select">
+    <option value="华东">华东</option>
+    <option value="华南">华南</option>
+    <option value="华北">华北</option>
+  </select>
+
+  <select id="goods_select">
+    <option value="手机">手机</option>
+    <option value="笔记本">笔记本</option>
+    <option value="智能音箱">智能音箱</option>
+  </select>
+  <div class="table"></div>
+</body>
+</html>
+<!-- 引入数据 -->
+<script src="./data.js"></script>
+<script>
+  var regionSelect = document.querySelector('#region_select');
+  var goodsSelect = document.querySelector('#goods_select');
+  var table = document.querySelector('.table');
+
+  /**
+   * 第一个参数为事件的event;
+   * 第二个参数为dom节点;
+   */
+  function setChecked (event, node) {
+    if (event.target.nodeName === 'LABEL') {
+      return;
+    }
+    var event = event || window.event;
+    // 如果点击的是全选
+    if (event.target.value === '全选') {
+      var inpArr = node.querySelectorAll('input');
+      inpArr.forEach(ele => {
+        ele.checked = true;
+      })
+    }
+    // 如果点击的不是全选    
+    else {
+      var inpArr = node.querySelectorAll('input');
+      var inpCheckedArr = node.querySelectorAll('input:checked');
+      // 如果'选中数量'等于 '总数量' length-1, 说明所有的都被点击了，那么设置'全选'被选上
+      if (inpCheckedArr.length === inpArr.length - 1 && (inpArr[inpArr.length - 1].checked === false)) {
+        inpArr[inpArr.length - 1].checked = true;
+      }
+
+      // 如果'选中数量'小于 '总数量' length-1,并且'全选被选上'  说明至少有一个没有被点击, 取消'全选'被选上
+      else if ((inpCheckedArr.length < inpArr.length) && inpCheckedArr.length > 1 && (inpArr[inpArr.length - 1].checked === true)) {
+        inpArr[inpArr.length - 1].checked = false;
+      }
+
+      // 如果'选中数量' = 1个, 那么就让点击失效
+      else if (inpCheckedArr.length === 0 && event.target.checked === false) {
+        event.preventDefault();
+      }
+    }
+  }
+
+  var objData = {};
+
+  // 当地区下拉改变时发生的事件
+  regionSelect.onchange = function () {
+    update();
+  }
+  // 当商品下拉发生改变时发生的事件
+  goodsSelect.onchange = function () {
+    update();
+  }
+
+  // 将数据进行分类
+  function classify(arr) {
+    var arr = arr.slice();
+    var obj = {}
+    arr.forEach((ele, index) => {
+      for (var key in obj) {
+        if (ele.region === key) {
+          obj[key].push(ele);
+          return;
+        }
+      }
+      if(!obj[ele['region']]) {
+        obj[ele['region']] = [];        
+      }
+      obj[ele['region']].push(ele);
+    });
+    return obj;
+  }
+  
+
+  function filterList () {
+    var regionArr = document.querySelectorAll('#region_select');
+    var goodsArr = document.querySelectorAll('#goods_select');
+
+    var arrTemp = [];
+    regionArr.forEach(ele => {
+      for (var key in objData) {
+        if (ele.value === key) {
+          arrTemp.push(objData[key]);
+        }
+      }
+    })
+    var arrTemp1 = [];
+    arrTemp.forEach((item, index) => {
+      item.forEach((ele, index1) => {
+        goodsArr.forEach(e => {
+          if (ele.product === e.value) {
+            if (!arrTemp1[index]) {
+              arrTemp1[index] = [];
+            }
+            arrTemp1[index].push(arrTemp[index][index1]);
+          }
+        })
+      })
+    })
+    return arrTemp1;
+  }
+
+  
+  function renderValue (valueArr) {
+    var str = '<th>商品</th><th>地区</th>';
+    for (var i = 1; i <= 12; i++) {
+      str += '<th>' + i + '月' + '</th>'
+    }
+
+    var str1 = '';
+    valueArr.forEach(ele => {
+      ele.forEach(item => {
+        str1 += '<tr>'
+        for (var key in item) {
+          if (key === 'sale') {
+            item[key].forEach(e => {
+              str1 += '<td>' + e + '</td>'
+            })
+            return;
+          }
+          str1 += '<td>' + item[key] + '</td>'
+        }
+        str1 += '<tr>' 
+      })
+    })
+    return '<table>' + str + str1 + '</table>'
+  }
+  
+  // 开始进行渲染
+  function beginRender (value) {
+    table.innerHTML = value;
+  }
+
+  // 将显示封装成一个新的函数
+  function update () {
+    var filterArr = filterList();
+    console.log('这儿是过滤后的数组');
+    console.log(filterArr);
+    var innerContent = renderValue(filterArr);
+    beginRender(innerContent);
+  }
+  
+  // objData存储分类后的数据
+  objData = classify(sourceData);
+
+  update();
+</script>

@@ -1,0 +1,33 @@
+#goods_select,
+#region_select {
+  width: 200px;
+  height: 30px;
+  border-radius: 3px;
+}
+table {
+  margin-top: 20px;
+  text-align: center;
+}
+table th {
+  width: 50px;
+}
+table tr td:first-child {
+  width: 150px;
+  /* background-color: red; */
+}
+table tr td,
+table tr th {
+  border: solid 1px #888;
+}
+table {
+  border-collapse: collapse;
+}
+
+.region_select,
+.goods_select {
+  display: inline-block;
+  margin-right: 40px;
+}
+label {
+  cursor: pointer;
+}
