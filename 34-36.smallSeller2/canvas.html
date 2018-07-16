@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: solid 1px #333;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="cvs" width="500" height="500"></canvas>
+</body>
+</html>
+
+<script>
+  var cvs = document.querySelector('#cvs');
+  var ctx = cvs.getContext('2d');
+  ctx.moveTo(0, 0);
+  ctx.lineTo(100, 100);
+  ctx.stroke();
+
+  // 绘制矩形
+  ctx.beginPath();
+  ctx.rect(200, 200, 100, 100);
+  ctx.strokeStyle = "red";
+  ctx.stroke();
+
+  // 绘制圆
+  ctx.beginPath();
+  ctx.arc(200, 200, 100, 0, 2 * Math.PI);
+  ctx.stroke();
+
+  // 绘制文字
+  ctx.beginPath();
+  ctx.font = '2rem Arail';
+  ctx.fillText('hello world', 0, 200);
+
+  drawClock(400, 100, 50, 3, 40, 30);
+  drawClock(400, 300, 60, 6, 40, 30);
+  drawCloud(200, 300, 200);
+  /**
+   * 绘制时钟
+   * @params x 坐标中心x轴
+   * @params y 坐标中心y轴
+   * @params r 时钟的半径
+   * @params hour 时
+   * @params minite 分
+   * @params second 秒
+   */
+  function drawClock(x, y, r, hour = 3, minute = 0, second = 30) {
+    ctx.beginPath();
+    var hourHandHeight = Math.floor(r / 2);
+    var hourHandWidth = 5;
+    var minuteHandHeight = Math.floor(3 * r / 5);
+    var minuteWidth = 4;
+    var secondHandHeight =  Math.floor(4 * r / 5);
+    var secondWidth = 3;
+    // 秒针转动的度数
+    var secondReg = (second / 60) * (2 * Math.PI);
+    // 分针转动的度数
+    var minuteReg = ((minute + ((second / 60))) / 60) * (2 * Math.PI);
+    // 小时转动的度数
+    var hourReg = ((hour % 12 + (minute + second / 60) / 60) / 12) * (2 * Math.PI);
+    // 绘制圆
+    ctx.strokeStyle = "#000";
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.stroke();
+    // 保存初始状态
+    ctx.save();
+    /******* 绘制时针 *******/
+    // c重置坐标系
+    ctx.translate(x, y);
+    ctx.save();
+    // 旋转坐标系
+    ctx.rotate(-Math.PI + hourReg);
+    ctx.beginPath();
+    ctx.rect(-hourHandWidth / 2, 0, hourHandWidth, hourHandHeight);
+    ctx.fillStyle = "#333";
+    ctx.fill();
+    /******* 绘制分针 *******/
+    // 回滚并保存
+    ctx.restore();
+    ctx.save();
+
+    ctx.rotate(-Math.PI + minuteReg);
+    ctx.beginPath();
+    ctx.rect(-minuteWidth / 2, 0, minuteWidth, minuteHandHeight);
+    ctx.fillStyle = "#999";
+    ctx.fill();
+    /******* 绘制秒针 *******/
+    // 回滚并保存
+    ctx.restore();
+    ctx.save();
+
+    ctx.rotate(-Math.PI + secondReg);
+    ctx.beginPath();
+    ctx.rect(-secondWidth / 2, 0, secondWidth, secondHandHeight);
+    ctx.fillStyle = "#ccc";
+    ctx.fill();
+
+    /******* 绘制表针的旋转中心 *******/
+    ctx.beginPath();
+    ctx.fillStyle = "#333333";    
+    ctx.arc(0, 0, r / 15, 0, 2 * Math.PI);
+    ctx.fill();
+    // 状态回滚到初始状态
+    ctx.restore();
+    ctx.restore();
+  }
+
+  /**
+   * @params x 起点坐标x
+   * @params y 起点坐标y
+   * @params width 云的宽度
+   */
+  function drawCloud(x, y, width) {
+    ctx.beginPath();
+    // 保存初始状态
+    ctx.save();
+    var r = Math.floor(width / 4);
+    ctx.translate(x, y);
+    ctx.fillStyle = '#60acfc';
+    ctx.arc(2 * r, r, r, 0, 2 * Math.PI);
+    ctx.arc(r, 2 * r, r, 0, 2 * Math.PI);
+    ctx.rect(r, r, 2 * r, 2 * r);
+    ctx.fill();
+    // 绘制高亮部分
+    ctx.beginPath();
+    ctx.fillStyle = '#60effc';
+    ctx.arc(3 * r, 2 * r, r, 0, 2 * Math.PI);
+    ctx.moveTo(r, 3 * r);
+    // 通过贝塞尔曲线控制弧度
+    ctx.bezierCurveTo(2 * r, 2.8 * r, 2 * r, 1.5 * r, 3 * r, r);
+    ctx.lineTo(3 * r, 3 * r);
+    ctx.closePath();
+    ctx.fill();
+    // 进行回滚
+    ctx.restore();
+  }
+
+</script>

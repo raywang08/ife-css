@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    svg,
+    canvas {
+      float: left;
+      margin-right: 20px;
+      border: solid 1px #eee;
+    }
+    .btns {
+      margin-bottom: 10px;
+    }
+  </style>
+  
+</head>
+
+<body>
+  <div class="btns">
+      <button id="svg">showSvg</button>
+      <button id="canvas">showCanvas</button>
+  </div>
+  <svg
+  version="1.1"
+  baseProfile="full"
+  width="500"
+  height="500"
+  >
+  </svg>
+  <!-- <iframe src="bar.svg" width="500" height="500"></iframe> -->
+  <!-- <object data="bar.svg" type="image/svg+xml" /> -->
+  <canvas id="cvs" width="500" height="500"></canvas>
+</body>
+
+</html>
+
+<script src="bar.js"></script>
+<script src="data.js"></script>
+<script src="line.js"></script>
+<script>
+  var svg = document.querySelector('svg');
+  var btn = document.querySelector('#svg');
+  var btn1 = document.querySelector('#canvas');
+  var cvs = document.querySelector('#cvs');
+  var ctx = cvs.getContext('2d');
+  btn.onclick = function () {
+    svg.innerHTML = setBar(sourceData[0].sale);
+  }
+  btn1.onclick = function () {
+    setPolyline(sourceData[0].sale);
+  }
+</script>
