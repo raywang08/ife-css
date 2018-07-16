@@ -15,24 +15,12 @@ body {
   height: 30px;
   border-radius: 3px;
 }
-.region_select,
-.goods_select {
-  display: inline-block;
-  margin-right: 40px;
-}
 table {
   margin-top: 20px;
   text-align: center;
 }
 table th {
   width: 50px;
-}
-table tr:first-child {
-  color: #fff;
-  background-color: #5BC49F;
-}
-table tr td {
-  width: 70px;
 }
 table tbody tr th:first-child {
   width: 150px;
@@ -46,18 +34,14 @@ table {
   border-collapse: collapse;
 }
 
-
-
-
+.region_select,
+.goods_select {
+  display: inline-block;
+  margin-right: 40px;
+}
 label {
   cursor: pointer;
 }
 svg {
   margin-right: 20px;
-}
-svg {
-  position: absolute;
-  bottom: 0;
-
-  border: solid 1px #eee;
 }

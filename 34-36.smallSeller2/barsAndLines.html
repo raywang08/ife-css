@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./barsAndLines.css">
 </head>
 <body>
   <div class="goods_select">
@@ -23,25 +23,34 @@
   </div>
 
   <div class="table"></div>
+
+  <svg version="1.1" baseProfile="full"></svg>
   <canvas id="cvs"></canvas>
 
 </body>
 </html>
 <!-- 引入数据 -->
-<script src="bar.js"></script>
-<script src="data.js"></script>
+<script src="bars.js"></script>
 <script src="lines.js"></script>
+<script src="data.js"></script>
 
 <script>
   var table = document.querySelector('.table');
-
   var regionSelect = document.querySelector('.region_select');
   var goodsSelect = document.querySelector('.goods_select');
+  // 地区被选择的个数
+  var regionSelectNumber = 0;
 
+  // 颜色数组， 每一组数据对应一个颜色，一类数据对应的颜色类似
+  var barcolors = [
+  ['#FEB64D', '#FFDA43', '#FFE168'],
+  ['#569AE2', '#60ACFC', '#9FCDFD'],
+  ['#FF9F69', '#FA816D', '#FB6E6C']];
+
+  var svg = document.querySelector('svg');
   var svg = document.querySelector('svg');
   var cvs = document.querySelector('#cvs');
   var ctx = cvs.getContext('2d');
-  var objData = {};
 
   // 通过事件委托触发事件
   regionSelect.onclick = function (event) {
@@ -56,12 +65,15 @@
     setSvgAndCanvasContent();
   }
   
+  // 通过onresize事件达到页面的响应式
   window.onresize = function () {
     setSvgAndCanvasContent();
   }
+
   /**
-   * 第一个参数为事件的event;
-   * 第二个参数为dom节点;
+   * 控制checkbox的勾选
+   * @params event 第一个参数为事件的event;
+   * @params node 第二个参数为dom节点;
    */
   function setChecked (event, node) {
     if (event.target.nodeName === 'LABEL') {
@@ -133,7 +145,7 @@
     return obj;
   }
 
-  // 当checkbox选择后，对数据objData进行过滤
+  // 当checkbox选择后，对数据进行过滤
   function filterList () {
     var regionArr = regionSelect.querySelectorAll('input:checked');
     var goodsArr = goodsSelect.querySelectorAll('input:checked');
@@ -180,12 +192,12 @@
     return '<table>' + str + str1 + '</table>'
   }
 
-  // 开始进行渲染
+  // 开始进行table表格渲染
   function beginRender (value) {
     table.innerHTML = value;
   }
 
-  // 将相同商品的名称合并为一行
+  // 将表格中相同商品的名称合并为一行
   function merge () {
     var regionArr = regionSelect.querySelectorAll('input:checked');
     var regionAll = regionSelect.querySelectorAll('input');
@@ -195,6 +207,10 @@
     if (length === regionAll.length) {
       length--;
     }
+    
+    // 为选择的地区数赋值
+    regionSelectNumber = length;
+    
     var chooseTdArr = document.querySelectorAll('tr');
     chooseTdArr.forEach((ele, index) => {
       var firstTd = ele.querySelector('td');
@@ -209,7 +225,7 @@
     })
   }
 
-  // 将显示封装成一个新的函数
+  // 将表格显示封装成一个新的函数
   function update () {
     var filterArr = filterList();
     var innerContent = renderValue(filterArr);
@@ -217,41 +233,73 @@
     merge();
   }
 
-  // 自适应设置canvas 与 svg 的大小
+  // 自适应设置svg 的大小
   function setSvgAndCanvas (arr) {
-    var svgWidth = (document.body.clientWidth - 40) / 3;
+    var svgWidth = (document.body.clientWidth - 100) / 2;
+    var svgHeight = Math.floor(document.body.clientHeight - 380);
     var arrTemp = [];
     arrTemp.push(sourceData[0].sale);
+
     var arr = arr || arrTemp;
+
+    var colorArrTemp = [];
     
+    svg.setAttribute('width', svgWidth);
+    svg.setAttribute('height', svgHeight);
+
     cvs.setAttribute('width', svgWidth);
-    cvs.setAttribute('height', svgWidth);
-    setPolyline(arr, svgWidth, svgWidth);
+    cvs.setAttribute('height', svgHeight);
+
+    // 通过regionSelectNumber值处理 颜色数组 barcolors
+    barcolors.forEach(ele => {
+      var colorCat = ele.slice(0, regionSelectNumber);
+      console.log('这儿是colorCat');
+      console.log(colorCat);
+      colorArrTemp = colorArrTemp.concat(colorCat);
+    })
+    console.log('这儿是colors');
+    console.log(colorArrTemp);
+    svg.innerHTML = setBar(arr, svgWidth, svgHeight, null, null, null, regionSelectNumber, colorArrTemp);
+    setPolyline(arr, svgWidth, svgHeight, null, null, colorArrTemp);
   }
 
-  // 设置canvas里面的内容
+  // 设置canvas 与 svg 表格里面的内容
   function setSvgAndCanvasContent () {
     var trList = document.querySelectorAll('table tr');
-    var linesArr = [];
+    var valueArr = [];
+    var tableItem = document.querySelector('table');
+    // 当鼠标离开表格时，重新计算显示所有数据
+    tableItem.onmouseleave = function () {
+      setSvgAndCanvasContent();
+    }
     trList.forEach((ele, index) => {
       if (index === 0) {
         return;
       }
       var tdList = ele.querySelectorAll('td');
       var tdArr = [];
+
+      ele.onmouseenter = function () {
+        var tdList = ele.querySelectorAll('td');
+        var tdArr = [];
+        tdList.forEach(ele => {
+          tdArr.push(+ele.innerText)
+        })
+        tdArr = tdArr.slice(2);
+        var valueArr = [];
+        valueArr.push(tdArr)
+        setSvgAndCanvas(valueArr);
+      }
       tdList.forEach(ele => {
         tdArr.push(+ele.innerText)
       })
+      
       tdArr = tdArr.slice(-12);
-      linesArr.push(tdArr);
+      valueArr.push(tdArr);
     })
-    console.log('这儿是lineArr');
-    console.log(linesArr);
-    setSvgAndCanvas(linesArr);
+    setSvgAndCanvas(valueArr);
   }
-  
-  objData = classify(sourceData);
-  // objData存储分类后的数据
+
   update();
   // 设置canvas 与 svg的大小
   setSvgAndCanvas();

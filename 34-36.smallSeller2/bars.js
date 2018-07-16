@@ -41,7 +41,7 @@ function setBar (arr, boxWidth = 500, boxHeight = 500, shaftWidth, shaftHight, i
   console.log(barWidth);
 
   // 设置轴的颜色
-  var shaftColor = `#60acfc`;
+  var shaftColor = '#666';
 
   var colorArr = [];
   // 生成随机颜色
@@ -72,8 +72,7 @@ function setBar (arr, boxWidth = 500, boxHeight = 500, shaftWidth, shaftHight, i
   var endPointY = originY;
 
   // shaftPathHtml为svg内部的html字符串，下面设置的是坐标
-  var shaftPathHtml = `<path d="M${beginPointX},${beginPointY} L${originX},${originY} L${endPointX},${endPointY}" fill="none" stroke="${shaftColor}" stroke-width="2"/>`
-
+  var shaftPathHtml = '';
   // 通过遍历获取柱状图
   arr.forEach((ele, index) => {
     ele.forEach((item, i) => {
@@ -84,6 +83,7 @@ function setBar (arr, boxWidth = 500, boxHeight = 500, shaftWidth, shaftHight, i
       shaftPathHtml += `<rect width="${barWidth}" height="${barHeight}" x="${xPoint}" y="${originY}" transform="translate(0,-${barHeight})" fill="${barColor[index]}"></rect>`
     })
   })
+  shaftPathHtml += `<path d="M${beginPointX},${beginPointY} L${originX},${originY} L${endPointX},${endPointY}" fill="none" stroke="${shaftColor}" stroke-width="2"/>`
   // 将html字符串进行返回
   return shaftPathHtml;
 }

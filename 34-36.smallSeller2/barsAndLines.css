@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 html, body {
   width: 100%;
@@ -8,17 +9,10 @@ html, body {
 }
 body {
   position: relative;
+  padding: 20px;
 }
-#goods_select,
-#region_select {
-  width: 200px;
-  height: 30px;
-  border-radius: 3px;
-}
-.region_select,
-.goods_select {
-  display: inline-block;
-  margin-right: 40px;
+.table {
+  height: 305px;  
 }
 table {
   margin-top: 20px;
@@ -27,12 +21,19 @@ table {
 table th {
   width: 50px;
 }
+table tr:hover {
+  background-color: rgba(91, 196, 159, .2);
+}
+table tr td[rowspan] {
+  background-color: #fff;
+}
 table tr:first-child {
   color: #fff;
   background-color: #5BC49F;
 }
 table tr td {
   width: 70px;
+  /* height: 30px; */
 }
 table tbody tr th:first-child {
   width: 150px;
@@ -41,23 +42,31 @@ table tbody tr th:first-child {
 table tr td,
 table tr th {
   border: solid 1px #888;
+  /* height: 30px; */
+  line-height: 30px;
 }
 table {
   border-collapse: collapse;
 }
 
-
-
+.region_select,
+.goods_select {
+  display: inline-block;
+  margin-right: 40px;
+}
 
 label {
+  margin-right: 10px;
+  color: #333;
   cursor: pointer;
+}
+label:nth-child(4) {
+  font-weight: 700;
+}
+svg, canvas {
+  float: left;
+  border: solid 1px #eee;
 }
 svg {
   margin-right: 20px;
-}
-svg {
-  position: absolute;
-  bottom: 0;
-
-  border: solid 1px #eee;
 }

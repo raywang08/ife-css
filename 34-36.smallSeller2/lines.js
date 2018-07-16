@@ -9,21 +9,20 @@
  */
 function setPolyline (arr, boxWidth = 500, boxHeight = 500, shaftWidth, shaftHight, lineColor) {
 
-  console.log('这儿是arr');
-  console.log(arr);
   var shaftWidth = shaftWidth || (boxWidth - 20);
   var shaftHight = shaftHight || (boxHeight - 20);
+  console.log('这儿是shaftWidth');
+  console.log(shaftWidth);
+
   var valuePointR = 2.5;
   // 单条数据的长度
   var length = arr[0].length;
 
   // 设置两个点的水平间隔
-  var interval = Math.floor(shaftHight / length);
+  var interval = Math.floor(shaftWidth / length);
 
   // 总共有多少条数据
   var valueArrLength = arr.length;
-  console.log('这儿是valueArrLength');
-  console.log(valueArrLength);
 
   var colorArr = [];
   // 生成随机颜色
@@ -45,10 +44,8 @@ function setPolyline (arr, boxWidth = 500, boxHeight = 500, shaftWidth, shaftHig
     lineColor = lineColor.concat(colorArr).slice(0, valueArrLength);
   }
 
-  console.log('这儿是lineColor');
-  console.log(lineColor);
   // 设置轴的颜色
-  var shaftColor = '#60acfc';
+  var shaftColor = '#000';
 
   // 获取数组的最大值
   var maxArr = [];
@@ -76,13 +73,6 @@ function setPolyline (arr, boxWidth = 500, boxHeight = 500, shaftWidth, shaftHig
   // 设置x轴上面的终点坐标
   var endPointX = beginPointX + shaftWidth;
   var endPointY = originY;
-  // 绘制坐标系
-  ctx.beginPath();
-  ctx.strokeStyle = shaftColor;
-  ctx.moveTo(beginPointX, beginPointY);
-  ctx.lineTo(originX, originY);
-  ctx.lineTo(endPointX, endPointY);
-  ctx.stroke();
 
   for (var j = 0; j < valueArrLength; j++) {
     // 存放点坐标的数组
@@ -109,9 +99,16 @@ function setPolyline (arr, boxWidth = 500, boxHeight = 500, shaftWidth, shaftHig
     // 遍历绘制折线点的原点，这样才能将折线压住
     for (i = 0; i < pointArr.length; i++) {
       ctx.beginPath();
-      ctx.fillStyle = pointColor;
+      ctx.fillStyle = lineColor[j];
       ctx.arc(pointArr[i][0], pointArr[i][1], valuePointR, 0, 2 * Math.PI);
       ctx.fill();
     }
   }
+  // 绘制坐标系
+  ctx.beginPath();
+  ctx.strokeStyle = shaftColor;
+  ctx.moveTo(beginPointX, beginPointY);
+  ctx.lineTo(originX, originY);
+  ctx.lineTo(endPointX, endPointY);
+  ctx.stroke();
 }
