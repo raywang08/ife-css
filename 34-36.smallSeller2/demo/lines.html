@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <link rel="stylesheet" href="./base1.css">
+  <link rel="stylesheet" href="../css/base.css">
 </head>
 <body>
   <div class="goods_select">
@@ -23,16 +23,14 @@
   </div>
 
   <div class="table"></div>
-
-  <svg version="1.1" baseProfile="full"></svg>
   <canvas id="cvs"></canvas>
 
 </body>
 </html>
 <!-- 引入数据 -->
-<script src="bar.js"></script>
-<script src="data.js"></script>
-<script src="lines.js"></script>
+<script src="../js/bar.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/lines.js"></script>
 
 <script>
   var table = document.querySelector('.table');
@@ -59,7 +57,7 @@
   }
   
   window.onresize = function () {
-    setSvgAndCanvas();
+    setSvgAndCanvasContent();
   }
   /**
    * 第一个参数为事件的event;
@@ -210,6 +208,7 @@
       }
     })
   }
+
   // 将显示封装成一个新的函数
   function update () {
     var filterArr = filterList();
@@ -221,42 +220,36 @@
   // 自适应设置canvas 与 svg 的大小
   function setSvgAndCanvas (arr) {
     var svgWidth = (document.body.clientWidth - 40) / 3;
-    
     var arrTemp = [];
     arrTemp.push(sourceData[0].sale);
-
-    var arr = arr || arrTemp;    
-
-    svg.setAttribute('width', svgWidth);
-    svg.setAttribute('height', svgWidth);
+    var arr = arr || arrTemp;
     
     cvs.setAttribute('width', svgWidth);
     cvs.setAttribute('height', svgWidth);
-    
-    svg.innerHTML = setBar(arr[0], svgWidth, svgWidth);
-    setPolyline(arr, svgWidth, svgWidth, null, null, ['red']);
+    setPolyline(arr, svgWidth, svgWidth);
   }
 
-  // 设置canvas 与 svg 表格里面的内容
+  // 设置canvas里面的内容
   function setSvgAndCanvasContent () {
     var trList = document.querySelectorAll('table tr');
+    var linesArr = [];
     trList.forEach((ele, index) => {
       if (index === 0) {
         return;
       }
-      ele.onmouseenter = function () {
-        var tdList = ele.querySelectorAll('td');
-        var tdArr = [];
-        tdList.forEach(ele => {
-          tdArr.push(+ele.innerText)
-        })
-        tdArr = tdArr.slice(2);
-        var valueArr = [];
-        valueArr.push(tdArr)
-        setSvgAndCanvas(valueArr);
-      }
+      var tdList = ele.querySelectorAll('td');
+      var tdArr = [];
+      tdList.forEach(ele => {
+        tdArr.push(+ele.innerText)
+      })
+      tdArr = tdArr.slice(-12);
+      linesArr.push(tdArr);
     })
+    console.log('这儿是lineArr');
+    console.log(linesArr);
+    setSvgAndCanvas(linesArr);
   }
+  
   objData = classify(sourceData);
   // objData存储分类后的数据
   update();

@@ -1,0 +1,177 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  position: relative;
+  padding: 20px;
+}
+.select {
+  min-width: 800px;
+}
+.table {
+  height: 300px;  
+}
+table {
+  margin-top: 15px;
+  text-align: center;
+}
+table th {
+  width: 50px;
+}
+table tr:hover {
+  /* cursor: pointer; */
+  background-color: rgba(91, 196, 159, .2);
+  /* background-color: red; */
+}
+table tr:first-child {
+  color: #fff;
+  background-color: #5BC49F;
+}
+table tr td {
+  min-width: 70px;
+  /* height: 30px; */
+}
+table tr td,
+table tr th {
+  border: solid 1px #888;
+  /* height: 30px; */
+  line-height: 28px;
+}
+table tbody tr th:first-child {
+  min-width: 150px;
+  /* background-color: red; */
+}
+[rowspan] {
+  background-color: #fff;
+  min-width: 150px;
+}
+table {
+  border-collapse: collapse;
+}
+.region_select,
+.goods_select {
+  display: inline-block;
+  margin-right: 40px;
+}
+label {
+  margin-right: 10px;
+  color: #333;
+  cursor: pointer;
+}
+label:nth-child(4) {
+  font-weight: 700;
+}
+svg, canvas {
+  float: left;
+  border: solid 1px #eee;
+}
+svg {
+  margin-right: 20px;
+}
+input[type='text'] {
+  /* outline-style: none; */
+  position: relative;
+  border: none;
+  text-align: center;
+  line-height: 30px;
+  width: 70px;
+  background-color: rgba(0, 0, 0, 0);
+}
+td.data {
+  cursor: pointer;
+  position: relative;
+}
+td.data .edit {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 25px;
+  height: 14px;
+  line-height: 14px;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  background-color: #668ED6;
+}
+td.data .comfirm,
+td.data .cancel{
+  position: absolute;
+  left: 0;
+  z-index: 10;
+  bottom: -30px;
+  width: 50px;
+  height: 25px;
+  border: solid 1px #ccc;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 20px;
+  color: #fff;
+  font-size: 14px;
+  background-color: #9CDC82;
+}
+
+td.data .cancel {
+  left: 55px;
+  color: #333;
+  background-color: #eee;
+}
+td.data .comfirm:active {
+  background-color: #AFE39B;
+}
+td.data .cancel:active {
+  background-color: #f5f5f5;
+}
+td.data input {
+  position: absolute;
+  width: 69px;
+  line-height: 28px;
+  text-align: center;
+  left: 0;
+  top: 0;
+  border: none;
+}
+td.data input:focus {
+  background-color: rgb(224, 255, 245);
+}
+/* td.data .cancel.show,
+td.data .comfirm.show,
+td.data .cancel.show,
+td.data input.show {
+  display: block;
+} */
+td.data .edit,
+td.data .comfirm,
+td.data .cancel,
+td.data input {
+  display: none;
+}
+td.data .edit.show,
+td.data .comfirm.show,
+td.data .cancel.show,
+td.data input.show {
+  display: block !important;
+}
+
+button {
+  position: relative;
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
+  border: none;
+  outline-style: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 5px;
+  background-color: #5BC49F;
+}
+button:active {
+  background-color: rgba(91, 196, 159, .8);
+}
