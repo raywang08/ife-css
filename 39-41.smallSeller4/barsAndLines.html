@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/barsAndLines.css">
+</head>
+<body>
+  <div class="select">
+    <div class="goods_select">
+      <label><input type="checkbox" value="手机" class="goods_phone" checked disabled>手机</label>
+      <label><input type="checkbox" value="笔记本" class="goods_book">笔记本</label>
+      <label><input type="checkbox" value="智能音箱" class="goods_box">智能音箱</label>
+      <label><input type="checkbox" value="全选" class="goods_all">全选</label>
+    </div>
+  
+    <div class="region_select">
+      <label><input type="checkbox" value="华东" class="region_east" checked disabled>华东</label>
+      <label><input type="checkbox" value="华南" class="region_south">华南</label>
+      <label><input type="checkbox" value="华北" class="region_north">华北 </label>
+      <label><input type="checkbox" value="全选" class="region_all">全选</label>
+    </div>
+    <button class="save">保存</button>
+  </div>
+  <div class="table"></div>
+  <svg version="1.1" baseProfile="full"></svg>
+  <canvas id="cvs"></canvas>
+  
+</body>
+</html>
+<!-- 引入数据 -->
+<script src="./js/bars.js"></script>
+<script src="./js/lines.js"></script>
+<script src="./js/data.js"></script>
+<script src="./js/barsAndLines.js"></script>
