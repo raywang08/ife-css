@@ -1,5 +1,5 @@
 /**
- * 生成多条线的折线图
+ * 生成折线图
  * @param {*} arr 传入的是多组数据组成的数据组
  * @param {*} boxWidth 盒子的宽度
  * @param {*} boxHeight 盒子的高度

@@ -1,5 +1,5 @@
 /**
- * 设置树状图
+ * 设置柱状图
  * @param {*} arr 柱状图数据组
  * @param {*} boxWidth 盒子宽度，默认500
  * @param {*} boxHeight  盒子高度，默认500
