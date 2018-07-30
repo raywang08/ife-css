@@ -83,7 +83,7 @@
   /**
    * 控制checkbox的勾选
    * @params event 第一个参数为事件的event;
-   * @params node 第二个参数为dom节点;
+   * @params node 第二个参数为dom节点，此处为goods_select 或者 region_select;
    */
   function setChecked (event, node) {
     if (event.target.nodeName === 'LABEL') {
@@ -579,6 +579,7 @@
     // 设置编辑相关
     showEdit();
   }
+  // 首次进入用当前的url覆盖历史记录
   history.replaceState(state, null, location.href);
   // 首先处理hash上面的内容
   dealHash();
