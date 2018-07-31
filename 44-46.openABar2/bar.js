@@ -93,17 +93,27 @@ var getCook = (function () {
 function Customer () {
   this.orderFoods = []
 }
+// 顾客点菜
 Customer.prototype.order = function (...foods) {
   console.log('点的菜是' + foods);
   this.orderFoods.push(...foods);
 }
+// 顾客吃东西
 Customer.prototype.eat = function (...foods) {
+  // 将菜单上面的内容置为空
+  this.orderFoods = [];
   console.log('顾客品尝食物')
   for (var i = 0; i < foods.length; i++) {
     foods.splice(i, 1);
     i--;
   }
   return foods;
+}
+// 随机选择菜品
+Customer.prototype.randomSelect = function (menu) {
+  var length = menu.length;
+  var randomIndex = Math.floor(Math.random * length);
+  this.orderFoods.push(menu(randomIndex));
 }
 
 // 一个服务员
@@ -134,18 +144,7 @@ for (var i = 0; i < 10; i++) {
 }
 
 // 实现一个菜单
-function Menu() {
-  this.firstFood = {
-    name: 'rice',
-    price: '1'
-  },
-  this.secondFood = {
-    name: 'apple',
-    price: '20'
-  }
-}
-
-// 在菜单上面点菜
-Menu.prototype.order = function (customer, name) {
-  customer.orderFoods.push(this[name]);
-}
+var menu = [
+  {name: 'apple' , price: '5'},
+  {name: 'rice', price: '1'},
+  {name: 'meat', price: '11'}]
