@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 10px;
+  min-width: 1150px;
+}
+ul, li {
+  list-style: none;
+}
+img {
+  width: 250px;
+  height: 250px;
+  border: solid 1px #ccc;
+}
+.box {
+  margin-left: 150px;
+  padding: 10px;
+  border: solid 1px #ccc;
+}
+.restaurant-cash {
+  /* font-size: 18px; */
+  margin-bottom: 20px;
+  font-weight: 400;
+  color: #666;
+}
+.restaurant-cash span {
+  font-weight: 700;
+  color: #c00;
+}
+.custom-list {
+  padding: 10px;
+  max-height: 500px;
+  float: left;
+  /* color: #eee; */
+  /* background-color: #c00; */
+  border: solid 1px #ccc;
+}
+.custom-list h3 {
+  margin-bottom: 10px;
+}
+.wrapper {
+  overflow: hidden;
+}
+.wrapper .cook {
+  position: relative;
+  float: left;
+}
+.wrapper .cook .food {
+  position: absolute;
+  top: 0;
+  left: 270px;
+  width: 200px;
+}
+.wrapper .cook .food .list {
+  margin-top: 10px;
+}
+.wrapper .custom {
+  width: 500px;
+  position: relative;
+  float: right;
+}
+.wrapper .custom .food {
+  position: absolute;
+  top: 0;
+  left: 270px;
+  width: 250px;
+}
+.wrapper .custom .food .list {
+  margin-top: 10px;
+}
+.waiter-wrapper {
+  overflow: hidden;
+}
+.waiter-wrapper .waiter {
+  margin-right: 250px;
+  float: right;
+  border: solid 1px #ccc;
+  transition: all .5s;
+}
