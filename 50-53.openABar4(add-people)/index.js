@@ -818,7 +818,7 @@ var queues = [];
 var testArr = deepClone(customers).slice(0, 3);
 
 // 每5秒随机产生3个顾客，然后进行渲染
-produceCustomersRamdom(5, 3, customers, queues);
+// produceCustomersRamdom(5, 3, customers, queues);
 
 testArr.forEach(ele => {
   ele.come();
