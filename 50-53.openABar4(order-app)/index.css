@@ -1,0 +1,208 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 10px;
+  min-width: 1320px;
+  font-size: 12px;
+}
+body, html {
+  height: 100%;
+}
+ul, li {
+  list-style: none;
+}
+img {
+  width: 150px;
+  height: 150px;
+  border: solid 1px #ccc;
+}
+.box {
+  overflow: hidden;  
+  height: calc(100% - 70px);
+  min-height: 630px;
+  margin-left: 150px;
+  padding: 10px;
+  border: solid 1px #ccc;
+}
+.restaurant-cash {
+  /* font-size: 18px; */
+  position: relative;
+  margin-bottom: 20px;
+  font-weight: 400;
+  color: #666;
+}
+.restaurant-cash span {
+  font-weight: 700;
+  color: #c00;
+}
+.restaurant-cash .btns {
+  position: absolute;
+  left: 300px;
+  top: 0;
+}
+.restaurant-cash .btns button {
+  height: 35px;
+  padding: 0 20px;
+  line-height: 35px;
+  outline: none;
+  cursor: pointer;  
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #08f;
+}
+.restaurant-cash .btns button:active {
+  background-color: #0af;
+}
+.restaurant-cash p {
+  position: absolute;
+  margin-top: 5px;
+  left: 300px;
+  font-size: 12px;
+  color: #c00;
+}
+.custom-list {
+  padding: 10px;
+  width: 120px;
+  max-height: 500px;
+  float: left;
+  /* color: #eee; */
+  /* background-color: #c00; */
+  border: solid 1px #ccc;
+}
+.custom-list h3 {
+  margin-bottom: 10px;
+}
+.cook-wrapper {
+  float: left;
+  width: 300px;
+} 
+.cook-wrapper img {
+  width: 70px;
+  height: 70px;
+}
+.cook-wrapper .cook {
+  position: relative;
+}
+.cook-wrapper .cook .food {
+  position: absolute;
+  top: 0;
+  left: 80px;
+  width: 200px;
+}
+.cook-wrapper .cook .food .list {
+  margin-top: 10px;
+}
+.cook-wrapper .cook .finish-foods {
+  position: absolute;
+  top: 0;
+  left: 360px;
+  width: 200px;
+}
+.middle {
+  float: left;
+  width: 300px;
+}
+.food-wrapper {
+  height: 270px;  
+  padding: 10px;  
+  border: solid 1px #eee;  
+} 
+.food-wrapper h3 {
+  font-size: 14px;
+}
+.food-wrapper .food-lists {
+  float: left;
+  width: 120px;
+}
+.food-wrapper .finish-foods {
+  float: right;
+  width: 120px;
+}
+.custom-wrapper {
+  position: relative;
+  float: right;  
+  padding: 0 10px;
+  width: 400px;
+  border: solid 1px #ccc;
+}
+.custom-wrapper>h2 {
+  position: absolute;
+  top: 0;
+  transform: translateX(-150%);
+  margin-right: 20px;
+}
+
+.custom,
+.custom1,
+.custom2 {
+  position: relative;
+  margin-top: 20px;
+  width: 400px;
+}
+
+.custom .showCustom,
+.custom1 .showCustom,
+.custom2 .showCustom {
+  position: absolute;
+  top: 15px;
+  left: -95px;
+  font-size: 20px;
+  color: orange;
+}
+
+.custom .food,
+.custom1 .food,
+.custom2 .food {
+  position: absolute;
+  top: 0;
+  left: 160px;
+  width: 250px;
+}
+.custom .food .list,
+.custom1 .food .list
+.custom2 .food .list {
+  margin-top: 10px;
+}
+.waiter-wrapper {
+  margin-top: 20px;
+  /* overflow: hidden; */
+}
+.waiter-wrapper img {
+  width: 70px;
+  height: 70px;
+}
+.waiter-wrapper .waiter {
+  position: relative;
+  height: 100px;
+  margin-top: 10px;
+  transition: all 1s;    
+  /* float: right; */
+  /* border: solid 1px #ccc; */
+}
+.waiter-wrapper .waiter .word {
+  position: absolute;
+  left: -70px;
+  width: 90px;
+  height: 40px;
+  border-radius: 20px;
+  line-height: 40px;
+  border: solid 3px #fff;
+  color: #fff;
+  text-align: center;
+  background-color: orangered;
+}
+.send-food {
+  position: absolute;
+  padding: 5px;
+  top: 0;
+  left: 80px;
+  border: solid 1px #eee;
+  color: #fff;
+  text-align: left;
+  color: red;
+}
