@@ -30,12 +30,39 @@ img {
 }
 .restaurant-cash {
   /* font-size: 18px; */
+  position: relative;
   margin-bottom: 20px;
   font-weight: 400;
   color: #666;
 }
 .restaurant-cash span {
   font-weight: 700;
+  color: #c00;
+}
+.restaurant-cash .btns {
+  position: absolute;
+  left: 300px;
+  top: 0;
+}
+.restaurant-cash .btns button {
+  height: 35px;
+  padding: 0 20px;
+  line-height: 35px;
+  outline: none;
+  cursor: pointer;  
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #08f;
+}
+.restaurant-cash .btns button:active {
+  background-color: #0af;
+}
+.restaurant-cash p {
+  position: absolute;
+  margin-top: 5px;
+  left: 300px;
+  font-size: 12px;
   color: #c00;
 }
 .custom-list {
@@ -50,26 +77,51 @@ img {
 .custom-list h3 {
   margin-bottom: 10px;
 }
-.wrapper {
-  float: left;  
+.cook-wrapper {
+  float: left;
+  width: 300px;
 } 
-.wrapper .cook {
+.cook-wrapper img {
+  width: 70px;
+  height: 70px;
+}
+.cook-wrapper .cook {
   position: relative;
 }
-.wrapper .cook .food {
+.cook-wrapper .cook .food {
   position: absolute;
   top: 0;
-  left: 160px;
+  left: 80px;
   width: 200px;
 }
-.wrapper .cook .food .list {
+.cook-wrapper .cook .food .list {
   margin-top: 10px;
 }
-.wrapper .cook .finish-foods {
+.cook-wrapper .cook .finish-foods {
   position: absolute;
   top: 0;
   left: 360px;
   width: 200px;
+}
+.middle {
+  float: left;
+  width: 300px;
+}
+.food-wrapper {
+  height: 270px;  
+  padding: 10px;  
+  border: solid 1px #eee;  
+} 
+.food-wrapper h3 {
+  font-size: 14px;
+}
+.food-wrapper .food-lists {
+  float: left;
+  width: 120px;
+}
+.food-wrapper .finish-foods {
+  float: right;
+  width: 120px;
 }
 .custom-wrapper {
   position: relative;
@@ -84,9 +136,7 @@ img {
   transform: translateX(-150%);
   margin-right: 20px;
 }
-.send-food {
-  color: red;
-}
+
 .custom,
 .custom1,
 .custom2 {
@@ -108,17 +158,24 @@ img {
   margin-top: 10px;
 }
 .waiter-wrapper {
-  position: relative;
-  transition: all 1s;  
   margin-top: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
+}
+.waiter-wrapper img {
+  width: 70px;
+  height: 70px;
 }
 .waiter-wrapper .waiter {
-  float: right;
-  border: solid 1px #ccc;
+  position: relative;
+  height: 100px;
+  margin-top: 10px;
+  transition: all 1s;    
+  /* float: right; */
+  /* border: solid 1px #ccc; */
 }
 .waiter-wrapper .waiter .word {
   position: absolute;
+  left: -70px;
   width: 90px;
   height: 40px;
   border-radius: 20px;
@@ -127,4 +184,14 @@ img {
   color: #fff;
   text-align: center;
   background-color: orangered;
+}
+.send-food {
+  position: absolute;
+  padding: 5px;
+  top: 0;
+  left: 80px;
+  border: solid 1px #eee;
+  color: #fff;
+  text-align: left;
+  color: red;
 }

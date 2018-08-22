@@ -10,6 +10,13 @@
 <body>
   <h1 class="restaurant-cash">
     餐厅有:￥<span>0</span>元现金
+    <div class="btns">
+      <button class="add-cook">增加厨师</button>
+      <button class="dec-cook">减少厨师</button>
+      <button class="add-waiter">增加服务员</button>
+      <button class="dec-waiter">减少服务员</button>
+    </div>
+    <p>最多3个厨师、服务员</p>
   </h1>
   <div class="custom-list">
     <h3>提示牌</h3>
@@ -20,8 +27,8 @@
     </ul>
   </div>
   <div class="box">
-    <div class="wrapper">
-      <div class="cook">
+    <ul class="cook-wrapper">
+      <li class="cook">
         <img src="./images/cook.jpg">
         <div class="cook-msg">
           <span class="id">No.001</span>
@@ -30,36 +37,92 @@
         <div class="food">
           <h3>状态</h3>
           <div class="state">
-            空闲中
-            <!-- <span class="cooking">正在做米饭</span>
-            <span class="time">还差1秒钟做完</span> -->
+            正在做米饭，还差1秒钟做完
           </div>
-          <div class="list">
-            <h3>菜单列表</h3>
-            <ul>
-              <!-- <li>米饭</li>
-              <li>鸡丁</li>
-              <li>抄手</li> -->
-            </ul>
+        </div>
+      </li>
+      <li class="cook">
+        <!-- <img src="./images/cook2.jpg">
+        <div class="cook-msg">
+          <span class="id">No.002</span>
+          <span class="name">张大厨</span>
+        </div>
+        <div class="food">
+          <h3>状态</h3>
+          <div class="state">
+            正在做米饭，还差1秒钟做完
           </div>
+        </div> -->
+      </li>
+      <li class="cook">
+        <!-- <img src="./images/cook3.jpg">
+        <div class="cook-msg">
+          <span class="id">No.003</span>
+          <span class="name">黄大厨</span>
+        </div>
+        <div class="food">
+          <h3>状态</h3>
+          <div class="state">
+            正在做米饭，还差1秒钟做完
+          </div>
+        </div> -->
+      </li>
+    </ul>
+    <div class="middle">
+      <div class="food-wrapper">
+        <div class="food-lists">
+          <h3>菜单列表</h3>
+          <ul>
+            <!-- <li>米饭</li>
+            <li>鸡丁</li>
+            <li>抄手</li> -->
+          </ul>
         </div>
         <div class="finish-foods">
           <h3>已经完成的菜品</h3>
           <ul>
+            <!-- <li>米饭</li>
+            <li>鸡丁</li>
+            <li>抄手</li> -->
           </ul>
         </div>
       </div>
-      <div class="waiter-wrapper">
-        <div class="waiter">
-          <span class="word"></span>
+      <ul class="waiter-wrapper">
+        <li class="waiter">
+          <!-- <span class="word"></span>
           <img src="./images/waiter.jpg">
           <div class="waiter-msg">
             <span class="id">No.001</span>
-            <span class="name">服务员：张女士</span>
+            <span class="name">张女士</span>
           </div>
-        </div>
-        <div class="send-food"></div>
-      </div>
+          <div class="send-food">
+            <div>番茄炒蛋</div>
+            <div>辣子鸡</div>
+            <div>地三鲜</div>
+            <div>大盘鸡</div>
+            <div>糖醋鱼</div>
+            <div>杂酱面</div> 
+          </div>           -->
+        </li>
+        <li class="waiter">
+          <!-- <span class="word"></span>
+          <img src="./images/waiter2.jpg">
+          <div class="waiter-msg">
+            <span class="id">No.002</span>
+            <span class="name">黄女士</span>
+          </div>
+          <div class="send-food"></div>           -->
+        </li>
+        <li class="waiter">
+          <!-- <span class="word"></span>
+          <img src="./images/waiter3.jpg">
+          <div class="waiter-msg">
+            <span class="id">No.003</span>
+            <span class="name">李女士</span>
+          </div>
+          <div class="send-food"></div>           -->
+        </li>
+      </ul>
     </div>
     <div class="custom-wrapper">
       <h2>用餐区</h2>
