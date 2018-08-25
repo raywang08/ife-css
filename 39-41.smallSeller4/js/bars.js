@@ -112,9 +112,6 @@ function setBar (arr, boxWidth = 500, boxHeight = 500, shaftWidth, shaftHight, i
   // 绘制月份
   shaftPathHtml += monthTextHtml;
  
-
- 
-
   // 将html字符串进行返回
   return shaftPathHtml;
 }
