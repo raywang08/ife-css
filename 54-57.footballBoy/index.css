@@ -1,0 +1,6 @@
+circle {
+  -webkit-transition: all 2s cubic-bezier(0.75, 0, 0.41, 0.98);
+  -moz-transition: all 2s cubic-bezier(0.75, 0, 0.41, 0.98);
+  -o-transition: all 2s cubic-bezier(0.75, 0, 0.41, 0.98);
+  transition: all 2s cubic-bezier(0.75, 0, 0.41, 0.98);
+}
