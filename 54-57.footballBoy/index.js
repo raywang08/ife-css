@@ -116,24 +116,32 @@ footballField.prototype.drawLine= function () {
 
 // 运动员类
 function Player(VNum) {
+  // 速度值
   this.VNum  = VNum || 1 + Math.floor(98 * Math.random());
+  // 最大速度
   this.VMax = Math.floor(3 + (this.VNum - 1) * ( 9 / 98 ));
-  // this.dom = document.createElement('circle');
-  this.dom = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+
+  // 为运动员添加dom属性，这个属性对应球员的dom
+  this.dom = document.createElement('div');
+  this.dom.style.width = 2 * globalUnit + 'px';
+  this.dom.style.height = 2 * globalUnit + 'px';
+  this.dom.style.background = '#fff';
+
+  // 定义运动员的爆发力
+  this.force = 1 + Math.floor(98 * Math.random());
+  // 运动员到达最大速度的时间
+  this.timeToFast = (-3 / 98 * this.force) + (395 / 98);
+  // 定义运动员的体力
+  this.strength = 1 + Math.floor(98 * Math.random());
+  // 运动员保持最大速度的时间
+  this.keepTime = (5 / 98 * this.strength) + (975 / 98);
 }
+
 // 描绘运动员
-Player.prototype.generatePlayer = function (svg) {
-  // let playHtml = `<circle cx="${ Math.floor(globalStartX + this.startX * globalUnit) }" cy="${ Math.floor(globalStartY + this.startY * globalUnit) }" r="${ Math.floor(2 * this.unit) }"
-  // stroke-width="${ (0.12 * this.unit).toFixed(3) }" stroke="rgb(255, 255, 255)" fill="rgba(0, 0, 0, 0)"/>`
-  this.dom.setAttribute('cx', Math.floor(globalStartX + this.startX * globalUnit));
-  this.dom.setAttribute('cy', Math.floor(globalStartY + this.startY * globalUnit));
-  this.dom.setAttribute('r', Math.floor(2 * globalUnit));
-  // this.dom.setAttribute('stroke-width', (0.12 * this.unit).toFixed(3));
-  // this.dom.setAttribute('stroke', rgb(255, 255, 255));
-  this.dom.setAttribute('fill', 'rgb(255, 255, 255)');
-  // this.dom.style['-webkit-transition'] = 'all 2s cubic-bezier(0.75, 0, 0.41, 0.98)'
-  svg.append(this.dom);
-  // dom.innerHTML += playHtml;
+Player.prototype.generatePlayer = function (domwrapper) {
+  this.dom.style.left = Math.floor(globalStartX + this.startX * globalUnit) + 'px';
+  this.dom.style.top = Math.floor(globalStartY + this.startY * globalUnit) + 'px';
+  domwrapper.append(this.dom);
 }
 
 /**
@@ -149,23 +157,52 @@ Player.prototype.setPosition = function (startX, startY) {
 Player.prototype.setFinalPosition = function (endX, endY) {
   this.endX = endX;
   this.endY = endY;
+
+  // 根据开始的位置与结束的位置计算距离
+  var distance = Math.floor(Math.sqrt(Math.pow(this.endX - this.startX, 2) + Math.pow(this.endY - this.startY, 2)));
+  // 计算运动时间，然后根据这个时间产生一个模拟的贝塞尔曲线运动方式，计算时，必须将运动员的速度提升假设为线性的，
+  // 也就是加速度必须为一个定值
+  // 将距离的计算分为三个部分，加速阶段；匀速阶段；减速阶段
+  // 加速的加速度
+  console.log('这儿是distance');
+  console.log(distance);
+  this.a = this.VMax / this.timeToFast;
+  console.log('这儿是加速度');
+  console.log(this.a);
+  // 加速阶段
+  var accelerateStage = 0.5 * this.a  * Math.pow(this.timeToFast, 2);
+  console.log('这儿是加速阶段的距离');
+  console.log(accelerateStage);
+  // 匀速阶段
+  var uniformState = this.VMax * this.keepTime;
+  console.log('这儿是匀速阶段');
+  console.log(uniformState);
+
+  var time;
+  if (distance > accelerateStage + uniformState) {
+    console.log('1111111111');
+    // 定义减速的加速度,根据公式 2as = Vt^2 - V0^2;
+    var a = -Math.pow(this.VMax, 2) / (2 * (distance - accelerateStage - uniformState))
+    time = this.timeToFast + this.keepTime + this.VMax / a;
+  } else if (distance > accelerateStage) {
+    console.log('2222222222');
+    time = this.timeToFast + (distance - accelerateStage) / this.VMax;
+  } else if (distance < accelerateStage) {
+    console.log('3333333333');
+    time = Math.sqrt(2 * distance / this.a);
+  } else {
+    console.log('4444444444');
+  }
+  console.log('这儿是time');
+  console.log(time);
+  this.dom.style.transition = `all ${time}s cubic-bezier(0.75, 0, 0.26, 0.98)`
 }
 /**
  * 运动员开始跑的函数
  */
 Player.prototype.run = function () {
-  // this.dom.setAttribute('cx', Math.floor(globalStartX + this.endX * globalUnit));
-  // this.dom.setAttribute('cy', Math.floor(globalStartY + this.endY * globalUnit));
-  this.dom.innerHTML = '';
-  this.animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-  this.animate.setAttribute('attributeName', 'x');
-  this.animate.setAttribute('from', '160');
-  this.animate.setAttribute('to', '60');
-  this.animate.setAttribute('begin', '0s');
-  this.animate.setAttribute('dur', '3s');
-  this.animate.setAttribute('repeatCount', 'indefinite');
-  this.dom.append(this.animate);
-  // <animate attributeName="x" from="160" to="60" begin="0s" dur="3s" repeatCount="indefinite" />
+  this.dom.style.left = Math.floor(globalStartX + this.endX * globalUnit) + 'px';
+  this.dom.style.top = Math.floor(globalStartY + this.endY * globalUnit) + 'px';
 }
 
 // 创建一个工厂对象
@@ -176,7 +213,7 @@ var factoryField = {
     Interface.ensureImplement(field, Field);
     return field;
   },
-  getPlay(VNum) {
+  getPlayer(VNum) {
     var player;
     player = new Player(VNum);
     Interface.ensureImplement(player, PlayerInt);
@@ -190,27 +227,46 @@ ShopField.prototype.getField = function(dom) {
   var field = factoryField.getField(dom);
   return field;
 }
-ShopField.prototype.getPlay = function(VNum) {
-  var player = factoryField.getPlay(VNum);
+ShopField.prototype.getPlayer = function(VNum) {
+  var player = factoryField.getPlayer(VNum);
   return player;
 }
 var svg = document.querySelector('#svg');
 var shopFiledObj = new ShopField();
-
+// 创建一个球场的对象
 var svgObj = shopFiledObj.getField(svg);
+
+// 定义一个全局的单位量
 var globalUnit = svgObj.unit;
+
+// 定义一个全局变量保存场地的开始坐标
 var globalStartX = svgObj.startX;
 var globalStartY = svgObj.startY;
-// 生成dom
+
+// 绘制草坪
 svgObj.generateField();
+// 绘制场地
 svgObj.drawLine();
 
-var player = shopFiledObj.getPlay(100);
-player.setPosition(20, 20);
-player.generatePlayer(svg);
+// 设置playerListWrapper的宽高与足球场地的宽高相同
+var playerListWrapper = document.querySelector('.player-list');
+playerListWrapper.style.width = svgObj.width + 'px';
+playerListWrapper.style.height = svgObj.height + 'px';
 
 var btn = document.querySelector('button');
+var player = shopFiledObj.getPlayer(100);
+var player1 = shopFiledObj.getPlayer(60);
+
+// 球员设置位置，这是控制一个球员的基本动作，1. 首先是设置开始坐标，2. 渲染球员，3. 设置结束坐标, 4. 在合适的地方开始run
+player.setPosition(30, 30);
+player.generatePlayer(playerListWrapper);
+player.setFinalPosition(100, 60);
+
+player1.setPosition(20, 40);
+player1.generatePlayer(playerListWrapper);
+player1.setFinalPosition(70, 30);
+
 btn.onclick = function () {
-  player.setFinalPosition(80, 20);  
   player.run();
+  player1.run();
 }
